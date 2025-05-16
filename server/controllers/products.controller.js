@@ -1,4 +1,4 @@
-const { getAllProducts, getFilteredElectronicsProducts, getPaginatedProducts  } = require("../db/products.db");
+const { getAllProducts, getFilteredElectronicsProducts, getPaginatedProducts, getProductsByUserId   } = require("../db/products.db");
 
 const getProductsController = async (req, res) => {
   try {
@@ -47,10 +47,26 @@ const getPaginatedProductsController = async (req, res) => {
   }
 };
 
+const getProductsByUserController = async (req, res) => {
+  const userId = parseInt(req.params.userId);
+
+  if (isNaN(userId)) {
+    return res.status(400).json({ error: "ID de usuario inválido" });
+  }
+
+  try {
+    const products = await getProductsByUserId(userId);
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(500).json({ error: "Error al obtener productos del usuario" });
+  }
+};
+
 module.exports = {
   getProductsController,
   getProductsUnder50Controller,
   getFilteredElectronicsController,
-  getPaginatedProductsController
+  getPaginatedProductsController,
+  getProductsByUserController
 };
 

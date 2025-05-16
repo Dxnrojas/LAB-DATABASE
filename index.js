@@ -3,7 +3,6 @@ const path = require("path");
 const { createServer } = require("http");
 
 
-const screen1EventsRouter = require("./server/routes/screen1Events.router");
 const { initSocketInstance } = require("./server/services/socket.service");
 const productsRouter = require("./server/routes/products.router");
 const usersRouter = require("./server/routes/users.router");
@@ -21,7 +20,6 @@ app.use("/app1", express.static(path.join(__dirname, "app1")));
 app.use("/app2", express.static(path.join(__dirname, "app2")));
 
 // Routes
-app.use("/", screen1EventsRouter);
 app.use("/products", productsRouter);
 app.use("/users", usersRouter);
 app.use("/", ordersRouter);

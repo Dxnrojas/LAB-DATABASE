@@ -15,7 +15,7 @@ const getFilteredElectronicsProducts = async () => {
     .from("products")
     .select("*")
     .gt("price", 30)
-    .eq("categorie", "Electronics");
+    .eq("category", "Tecnología");
 
   if (error) {
     console.error("Error al filtrar productos Electronics:", error);
@@ -39,8 +39,23 @@ const getPaginatedProducts = async (limit = 10, offset = 0) => {
   return data;
 };
 
+const getProductsByUserId = async (userId) => {
+  const { data, error } = await supabaseCli
+    .from("products")
+    .select()
+    .eq("user_id", userId);
+
+  if (error) {
+    console.error("Error al obtener productos por usuario:", error);
+    return error;
+  }
+
+  return data;
+};
+
 module.exports = {
   getAllProducts,
   getFilteredElectronicsProducts,
   getPaginatedProducts,
+   getProductsByUserId
 };
