@@ -10,6 +10,22 @@ const getAllProducts = async () => {
   return data;
 };
 
+const getFilteredElectronicsProducts = async () => {
+  const { data, error } = await supabaseCli
+    .from("products")
+    .select("*")
+    .gt("price", 30)
+    .eq("categorie", "Electronics");
+
+  if (error) {
+    console.error("Error al filtrar productos Electronics:", error);
+    return error;
+  }
+
+  return data;
+};
+
 module.exports = {
   getAllProducts,
+  getFilteredElectronicsProducts,
 };

@@ -1,4 +1,4 @@
-const { getAllProducts } = require("../db/products.db");
+const { getAllProducts, getFilteredElectronicsProducts } = require("../db/products.db");
 
 const getProductsController = async (req, res) => {
   try {
@@ -25,8 +25,18 @@ const getProductsUnder50Controller = async (req, res) => {
   }
 };
 
+const getFilteredElectronicsController = async (req, res) => {
+  try {
+    const products = await getFilteredElectronicsProducts();
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(500).json({ error: "Error al filtrar productos Electronics" });
+  }
+};
+
 module.exports = {
   getProductsController,
-  getProductsUnder50Controller
+  getProductsUnder50Controller,
+  getFilteredElectronicsController
 };
 
