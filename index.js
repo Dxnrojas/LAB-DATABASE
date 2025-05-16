@@ -7,6 +7,7 @@ const screen1EventsRouter = require("./server/routes/screen1Events.router");
 const { initSocketInstance } = require("./server/services/socket.service");
 const productsRouter = require("./server/routes/products.router");
 const usersRouter = require("./server/routes/users.router");
+const ordersRouter = require("./server/routes/orders.router");
 
 const PORT = 5051;
 
@@ -22,6 +23,7 @@ app.use("/app2", express.static(path.join(__dirname, "app2")));
 app.use("/", screen1EventsRouter);
 app.use("/products", productsRouter);
 app.use("/users", usersRouter);
+app.use("/", ordersRouter);
 
 // Services
 initSocketInstance(httpServer);
