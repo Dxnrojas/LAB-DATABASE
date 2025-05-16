@@ -25,7 +25,22 @@ const getFilteredElectronicsProducts = async () => {
   return data;
 };
 
+const getPaginatedProducts = async (limit = 10, offset = 0) => {
+  const { data, error } = await supabaseCli
+    .from("products")
+    .select("*")
+    .range(offset, offset + limit - 1); // Supabase usa rango de índices
+
+  if (error) {
+    console.error("Error al paginar productos:", error);
+    return error;
+  }
+
+  return data;
+};
+
 module.exports = {
   getAllProducts,
   getFilteredElectronicsProducts,
+  getPaginatedProducts,
 };

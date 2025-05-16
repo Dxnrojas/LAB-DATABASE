@@ -1,4 +1,4 @@
-const { getAllProducts, getFilteredElectronicsProducts } = require("../db/products.db");
+const { getAllProducts, getFilteredElectronicsProducts, getPaginatedProducts  } = require("../db/products.db");
 
 const getProductsController = async (req, res) => {
   try {
@@ -34,9 +34,23 @@ const getFilteredElectronicsController = async (req, res) => {
   }
 };
 
+const getPaginatedProductsController = async (req, res) => {
+  try {
+    const limit = parseInt(req.query.limit) || 10;
+    const offset = parseInt(req.query.offset) || 0;
+
+    const products = await getPaginatedProducts(limit, offset);
+    res.status(200).json(products);
+  } catch (error) {
+    console.error("Error en la paginación:", error);
+    res.status(500).json({ error: "Error al paginar productos" });
+  }
+};
+
 module.exports = {
   getProductsController,
   getProductsUnder50Controller,
-  getFilteredElectronicsController
+  getFilteredElectronicsController,
+  getPaginatedProductsController
 };
 
